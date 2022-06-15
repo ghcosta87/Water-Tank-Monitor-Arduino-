@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 commit e38f09a4086c2424128e5fe97c0d66fc5aeb185b
 Author: Gabriel <ghcosta87@gmail.com>
 Date:   Wed Jun 15 12:04:12 2022 -0300
@@ -21,6 +22,8 @@ Author: Gabriel <ghcosta87@gmail.com>
 Date:   Wed Jun 15 12:01:47 2022 -0300
 
     statup updated ino
+=======
+>>>>>>> 28398466a8e8b81870c9c099a2aea30354c0cba5
 
 commit 4707cf1b0fde6154c741a732b34e93fcd08c6479
 Author: gabriel <ghcosta87@gmail.com>
