@@ -1,10 +1,25 @@
-
-void iniciar_serial()
+void plotData(String title,String stringData[], float floatData[],String format[])
 {
-  Serial.begin(9600);
-  Serial.println(versao);
+  int size = sizeof(floatData) / sizeof(float);
+  Serial.println(title);
+  for (int i; i < size; i++)
+  {
+    Serial.print(stringData[i] + ": ");
+    Serial.print(floatData[i]);
+    Serial.println(" "+format[i]);
+  }  
+  Serial.println("");
 }
 
+void serialInput(bool turnOn)
+{
+  if (turnOn)
+    if (Serial.available())
+    {
+    }
+}
+
+/*
 void filtrar_via_serial(bool serial_ligado)
 {
   if (serial_ligado)
@@ -88,8 +103,8 @@ void monitor_serial(bool serial_ligado, bool debug_ligado)
       Serial.print("| ");
       Serial.print(out.feedback_vazao);
       Serial.print("| ");
-      //Serial.print(out.status_filtragem);
-      //Serial.print("| ");
+      // Serial.print(out.status_filtragem);
+      // Serial.print("| ");
       Serial.print(out.falha);
       Serial.print("| ");
       //      Serial.print(out.auto_fil);
@@ -135,7 +150,7 @@ void monitor_serial(bool serial_ligado, bool debug_ligado)
         Serial.print("| Porcentagem: ");
         Serial.print((float)out.porcentagem / 100);
         Serial.println(" %");*/
-      Serial.print("| Altura da coluna d'água inicial/final: ");
+/*      Serial.print("| Altura da coluna d'água inicial/final: ");
       Serial.print(altura_ant);
       Serial.print("/");
       Serial.println(altura);
@@ -256,9 +271,11 @@ void monitor_serial(bool serial_ligado, bool debug_ligado)
       Serial.println("|__________________________________________");
       Serial.println("");
       contador = 0;
-    } else if (contador > 15) {
+    }
+    else if (contador > 15)
+    {
       Serial.println("timeout...");
     }
     delay(10);
   }
-}
+}*/
