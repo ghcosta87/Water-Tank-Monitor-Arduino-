@@ -1,0 +1,5 @@
+#define READ_MONITOR 1  
+#define WATERLEVEL_MONITOR 2
+#define RF_MONITOR 3
+#define ERROR_MONITOR 4
+#define OUTPUT_MONITOR 5
