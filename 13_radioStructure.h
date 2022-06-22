@@ -5,15 +5,15 @@
 const byte addresses[][6] = {"pipe0", "pipe1", "pipe2", "pipe3", "pipe4", "pipe5"};
 RF24 radio(9, 10);
 
-struct structureToSend // estrutura de envio de dados
+struct structureToSend
 {
-  byte pipeBegin = 153; 
+  byte pipeBegin = 153;
   int analogPressure = 0;
   int pumpState = 0;
-  bool flowFeedback=false;
+  bool flowFeedback = false;
   int fault = 0;
   unsigned int blank = 0;
-  byte pipeEnd = 253; 
+  byte pipeEnd = 253;
 };
 
 typedef struct structureToSend dataTypeOut;
@@ -24,14 +24,18 @@ struct structureToReceive
   byte pipeBegin = 0;
   bool circulationControl = false;
   bool pumpControl = false;
-  byte pipeEnd = 0; 
+  byte pipeEnd = 0;
 };
 
 typedef struct structureToReceive dataTypeIn;
 dataTypeIn receivedData;
 
-void radioSetup() {
-  radio.begin(); 
+void radioSetup()
+{
+  radio.begin();
+  radio.setChannel(125);
+  radio.setPALevel(RF24_PA_MAX);
+  radio.printPrettyDetails();
   radio.openWritingPipe(addresses[2]);
   radio.openReadingPipe(1, addresses[1]);
 }

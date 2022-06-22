@@ -4,8 +4,8 @@
 #define valve 4
 #define flow 7
 #define pressure A0
-#define rxPin 9
-#define txPin 10
+#define rxPin 7
+#define txPin 8
 
 //  ➤ Constants
 //  ~ pmp control ~
@@ -19,22 +19,24 @@
 #define PIPE_BEGIN 155
 #define PIPE_END 255
 //  ~ errors control ~
-#define FLOW_ERROR 0
-#define WATER_HEIGHT_ERROR 1
-#define FLOW_AND_HEIGHT_ERROR 2
+#define FLOW_ERROR 1
+#define WATER_HEIGHT_ERROR 2
+#define FLOW_AND_HEIGHT_ERROR 3
 //  ~ aux funcitions control ~
 #define HEIGHER_THAN 0
 #define LOWER_THAN 1
-#define MIN_COMM_DURATION 200 // nome fora do padrao arrumar depois
-#define MAX_COMM_DURATION 600 // nome fora do padrao arrumar depois
+#define MIN_COMM_DURATION 100
+#define MAX_COMM_DURATION 300
 
 //  ➤ Setpoints
-#define _waterHeightMeasureInterval  5 // in minutes
-#define _waterHeightFinishMeasure 3 // in minutes
-#define _statupDelay 1 // in minutes
-#define _circulationTotalTime 6 // in hour
+#define _waterHeightMeasureInterval 5 // in minutes
+#define _waterHeightFinishMeasure 3   // in minutes
+#define _statupDelay 1                // in minutes
+#define _circulationTotalTime 1       // in hour
+#define _faultAutoReset 5             // in minutes
 
 //  ➤ Alarms
-#define lowFlowTimeLimit 1 // in minutes
-#define minWaterHeight 2 // in centimeters
+#define _lowFlowTimeLimit 1  // in minutes
+#define minWaterHeight 2     // in centimeters
 #define normalWaterHeight 10 // in centimeters
+#define minimumFlow 400      // in L/min

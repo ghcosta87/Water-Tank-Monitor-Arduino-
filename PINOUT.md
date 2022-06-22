@@ -1,14 +1,4 @@
 /*
-Projeto : Controlador sem fio
-Autor : Gabriel H CMosta
-Arduino: #1
-Funcionamento:
-Data primeira revisao: < 2020
-Data da versão: 
-Versão: 7 
-*/
-
-/*
 --------------------------------------------------------------
   LIGAÇÃO NRF24L01
   LADO 1                            | LADO 2
