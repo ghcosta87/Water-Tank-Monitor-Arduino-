@@ -6,4 +6,4 @@
 
 #include <SoftwareSerial.h>
 
-SoftwareSerial mySerial(rxPin, txPin);
+SoftwareSerial softSerial(rxPin, txPin);
