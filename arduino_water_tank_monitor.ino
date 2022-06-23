@@ -12,12 +12,12 @@ void setup()
 
 void loop()
 {
-  readInputs(READ_MONITOR); // 01_localControl.ino
-  checkWaterLevel();
+  readInputs(READ_MONITOR);            // 01_localControl.ino
+  checkWaterLevel(WATERLEVEL_MONITOR); // 02_waterControl.ino
   receiveDataFromRF();
-  recordDataFromRF();
-  verifyErrors();
-  setOutputs();
-  sendDataToRF();
+  recordDataFromRF(RF_MONITOR_INPUT);
+  verifyErrors(ERROR_MONITOR);
+  setOutputs(READ_STATUS);
+  sendDataToRF(RF_MONITOR_OUTPUT); // 06_radioControl.ino
   delay(10);
 }

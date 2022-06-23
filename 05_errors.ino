@@ -1,8 +1,8 @@
-void verifyErrors()
+void verifyErrors(bool monitorEnable)
 {
   bool error[] = {false, false};
   error[0] = checkWaterHeightError();
-  error[1] = checkFlowError();
+  error[1] = checkFlowError(monitorEnable);
 
   if (error[0])
     sendData.fault = WATER_HEIGHT_ERROR;
@@ -12,37 +12,57 @@ void verifyErrors()
     sendData.fault = FLOW_AND_HEIGHT_ERROR;
   if (sendData.fault > 0)
     emergencyStop = true;
+
+  if (emergencyStop)
+  {
+    String myTexts[] = {_ESTOP_TITLE, String(_faultAutoReset) + _MIN};
+    if (complexStopWatch(setFaultAutoReset, __MinToMiliSec(_faultAutoReset), HEIGHER_THAN, myTexts, true) && pumpModeRemote == PUMP_OFF)
+    {
+      emergencyStop = false;
+      sendData.fault = 0;
+    }
+  }
+  else
+    setFaultAutoReset = millis();
+
+  if (monitorEnable)
+  {
+    String messages[] = {"waterHeightError", "flowError", "fault"};
+    unsigned long int data[] = {__floatToInt(error[0]), __floatToInt(error[1]), __floatToInt(sendData.fault)};
+    String format[] = {"bool", "bool", "int"};
+    plotData("verifyErrors", messages, data, format, 3);
+  }
 }
 
 bool checkWaterHeightError()
 {
   if (waterHeight <= minWaterHeight)
     return true;
-  if (waterHeight > normalWaterHeight)
-    return false;
+  return false;
 }
 
-bool checkFlowError()
+bool checkFlowError(bool monitorEnable)
 {
-  /*
-  se o iniciliaziador da vazão tiver ligado (iniciar_cron_vazao),
-  a filtragem estiver ativa e a vazão estiver fora, inicializa o tempo
-  inicial de baixa vaza e desliga o iniciliaziador da vazão
-  */
-  if (lowFlowCounterEnable && circulationActive && !flowStatus)
+  int flowValue = getFlow();
+  if (monitorEnable)
+  {
+    String messages[] = {"flowValue", "lowFlowCounterEnable", "circulationActive"};
+    unsigned long int data[] = {__floatToInt(flowValue), __floatToInt(lowFlowCounterEnable), __floatToInt(circulationActive)};
+    String format[] = {"L/min", "bool", "bool"};
+    plotData("checkFlowError", messages, data, format, 3);
+  }
+  if (lowFlowCounterEnable && circulationActive)
   {
     lowFlowInitialTime = millis();
     lowFlowCounterEnable = false;
   }
-  /*
-  se o cronometro de vazao for <true> e o inicializador da vazão estiver desligado
-  verifica se a filtragem está ativa e o vazão foi identificada e retorna <true>
-  se não retorna <false>
-  */
-  if (complexStopWatch(lowFlowInitialTime,__MinToMiliSec(lowFlowTimeLimit),HEIGHER_THAN) && !lowFlowCounterEnable)
+  String myTexts[] = {_FLOW_TITLE, (String)_lowFlowTimeLimit + _MIN};
+  if (complexStopWatch(lowFlowInitialTime, __MinToMiliSec(_lowFlowTimeLimit), HEIGHER_THAN, myTexts, true) && !lowFlowCounterEnable)
   {
-    if (circulationActive && flowStatus)
+    if (circulationActive && flowValue < minimumFlow)
       return true;
+    else
+      lowFlowCounterEnable = true;
   }
   return false;
 }
